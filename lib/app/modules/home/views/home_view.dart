@@ -52,7 +52,7 @@ class HomeView extends GetView<HomeController> {
         padding: const EdgeInsets.all(16.0),
         child: RefreshIndicator(
           onRefresh: () async {
-            await authService().getForms(homeController.tiket.text);
+            await homeController.getDataForms("");
           },
           child: ListView(
             children: [
@@ -117,7 +117,7 @@ class HomeView extends GetView<HomeController> {
                                                           ["status"] ==
                                                       "Rejected"
                                                   ? Color(0xFFFF5555)
-                                                  : Color(0xFF9EA0B9),
+                                                  : Colors.green,
                                           borderRadius:
                                               BorderRadius.circular(5)),
                                       child: CText(
@@ -214,7 +214,67 @@ class HomeView extends GetView<HomeController> {
                                       )
                                     ],
                                   ),
-                                )
+                                ),
+                                homeController.forms[index]["catatan_spv"] !=
+                                        null
+                                    ? Container(
+                                        margin: EdgeInsets.only(top: 8),
+                                        padding: EdgeInsets.symmetric(
+                                            vertical: 8, horizontal: 8),
+                                        decoration: BoxDecoration(
+                                            color: Color(0xFF77AAF6),
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
+                                        child: Row(
+                                          children: [
+                                            Container(
+                                              height: 60,
+                                              width: 60,
+                                              padding: EdgeInsets.symmetric(
+                                                  vertical: 8, horizontal: 8),
+                                              decoration: BoxDecoration(
+                                                  color: Colors.red,
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10)),
+                                              child: Icon(
+                                                Icons.info,
+                                                size: 36,
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              width: 10,
+                                            ),
+                                            Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                CText(
+                                                  "Catatan SPV",
+                                                  color: Colors.white,
+                                                  fontSize: 16,
+                                                ),
+                                                SizedBox(
+                                                  width:
+                                                      MediaQuery.sizeOf(context)
+                                                              .width -
+                                                          150,
+                                                  child: CText(
+                                                    "${homeController.forms[index]["catatan_spv"]}",
+                                                    color: Colors.white,
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 16,
+                                                  ),
+                                                ),
+                                              ],
+                                            )
+                                          ],
+                                        ),
+                                      )
+                                    : SizedBox()
                               ],
                             ),
                           ),

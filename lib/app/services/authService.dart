@@ -11,39 +11,6 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
 class authService extends GetConnect {
-  Future uploadImage(context, image, RxString documentation) async {
-    FormController formController = Get.put(FormController());
-
-    try {
-      final token = await GetStorage().read("token");
-
-      print("image : $image");
-
-      if (token != null) {
-        final response = await post(
-            '$urlApi/api/photo',
-            FormData({
-              'photo': MultipartFile(image, filename: 'image.jpg'),
-            }),
-            headers: {'Authorization': 'Bearer $token'});
-
-        var data = response.body;
-
-        print("upload image : $data");
-
-        if (data != null) {
-          documentation.value = data["url"];
-          formController.update();
-        }
-      } else {
-        errorMessage("Token is null");
-        throw Exception("Token is null");
-      }
-    } catch (e) {
-      errorMessage("uploadImage : $e");
-    }
-  }
-
   void login(context, id, pass) async {
     print("username: " + id);
     print("password: " + pass);
@@ -122,6 +89,39 @@ class authService extends GetConnect {
       onLoadingDismiss();
       errorMessage(e);
       return false;
+    }
+  }
+
+  Future uploadImage(context, image, RxString documentation) async {
+    FormController formController = Get.put(FormController());
+
+    try {
+      final token = await GetStorage().read("token");
+
+      print("image : $image");
+
+      if (token != null) {
+        final response = await post(
+            '$urlApi/api/photo',
+            FormData({
+              'photo': MultipartFile(image, filename: 'image.jpg'),
+            }),
+            headers: {'Authorization': 'Bearer $token'});
+
+        var data = response.body;
+
+        print("upload image : $data");
+
+        if (data != null) {
+          documentation.value = data["url"];
+          formController.update();
+        }
+      } else {
+        errorMessage("Token is null");
+        throw Exception("Token is null");
+      }
+    } catch (e) {
+      errorMessage("uploadImage : $e");
     }
   }
 
@@ -323,4 +323,5 @@ class authService extends GetConnect {
       return false;
     }
   }
+
 }

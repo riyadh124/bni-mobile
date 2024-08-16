@@ -226,6 +226,8 @@ class FormView extends GetView<FormController> {
                 ],
               ),
             ),
+          
+          
             Container(
               margin: const EdgeInsets.only(left: 14, right: 14, bottom: 14),
               padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 18),
